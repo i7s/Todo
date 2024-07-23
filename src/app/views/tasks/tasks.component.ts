@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Category} from "../../model/Category";
 import {DataHandlerService} from "../../service/data-handler.service";
 import {Task} from "../../model/Task";
 
@@ -12,11 +11,10 @@ export class TasksComponent implements OnInit {
 
   tasks: Task[] = [];
 
-  constructor(private dataHender: DataHandlerService) {
+  constructor(private dataHandler: DataHandlerService) {
   }
 
   ngOnInit() {
-    this.tasks = this.dataHender.getTasks();
-    console.log(this.tasks);
+    this.dataHandler.taskSubject.subscribe(tasks => this.tasks = tasks);
   }
 }
