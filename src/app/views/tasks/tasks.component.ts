@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {DataHandlerService} from "../../service/data-handler.service";
 import {Task} from "../../model/Task";
 import {MatTableDataSource} from "@angular/material/table";
@@ -10,7 +10,7 @@ import {MatSort} from "@angular/material/sort";
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css'
 })
-export class TasksComponent implements OnInit, AfterViewInit {
+export class TasksComponent implements OnInit {
 
   protected displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category'];
   protected dataSource!: MatTableDataSource<Task>;
@@ -18,16 +18,22 @@ export class TasksComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: false}) private paginator!: MatPaginator;
   @ViewChild(MatSort, {static: false}) private sort!: MatSort;
 
-  tasks: Task[] = [];
+  public tasks!: Task[];
+
+  @Input('tasks')
+  public set setTasks(tasks: Task[]) {
+    this.tasks = tasks;
+    this.fillTable();
+  }
 
   constructor(private dataHandler: DataHandlerService) {
   }
 
   ngOnInit() {
-    this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);
+    // this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);
 
     this.dataSource = new MatTableDataSource();
-    this.refreshTable();
+    this.fillTable();
   }
 
   ngAfterViewInit(): void {
@@ -48,7 +54,12 @@ export class TasksComponent implements OnInit, AfterViewInit {
     return "#fff";
   }
 
-  private refreshTable() {
+  private fillTable() {
+
+    if(!this.dataSource) {
+      return;
+    }
+
     this.dataSource.data = this.tasks;
 
     this.addTableObjects();

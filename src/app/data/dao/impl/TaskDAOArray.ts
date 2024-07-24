@@ -23,9 +23,16 @@ export class TaskDAOArray implements TaskDAO {
     throw new Error("Method not implemented.");
   }
 
+  search(category: Category | null, searchText: string | null, status: boolean | null, priority: Priority | null): Observable<Task[]> {
+    return of(this.searchTodos(category, searchText, status, priority));
+  }
 
-  search(category: Category, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
-    throw new Error("Method not implemented.");
+  private searchTodos(category: Category | null, searchText: string | null, status: boolean | null, priority: Priority | null): Task[] {
+    let allTasks = TestData.tasks;
+    if (category != null) {
+      allTasks = allTasks.filter(todo => todo.category === category);
+    }
+    return allTasks;
   }
 
   getCompletedCountInCategory(category: Category): Observable<number> {
