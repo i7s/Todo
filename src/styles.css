@@ -25,3 +25,7 @@
 .mat-mdc-dialog-actions {
   padding-left: 24px !important;
 }
+
+.red {
+  color: red !important;
+}

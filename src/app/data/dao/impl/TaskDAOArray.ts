@@ -20,7 +20,9 @@ export class TaskDAOArray implements TaskDAO {
   }
 
   delete(id: number): Observable<Task> {
-    throw new Error("Method not implemented.");
+    const taskTemp = TestData.tasks.find(t => t.id === id); // удаляем по id
+    TestData.tasks.splice(TestData.tasks.indexOf(taskTemp!), 1);
+    return of(taskTemp!);
   }
 
   search(category: Category | null, searchText: string | null, status: boolean | null, priority: Priority | null): Observable<Task[]> {
