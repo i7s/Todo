@@ -22,15 +22,14 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.dataHandler.getAllCategories().subscribe(categories => this.categories = categories);
   }
 
-  showTasksByCategory(category: Category) {
+  showTasksByCategory(category: Category | null) {
     if (this.selectedCategory === category) {
       return;
     }
 
-    this.selectedCategory = category;
+    this.selectedCategory = category!;
     this.selectCategory.emit(this.selectedCategory);
   }
 
