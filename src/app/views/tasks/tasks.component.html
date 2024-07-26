@@ -34,7 +34,7 @@
         <td class="col-date" *matCellDef="let task"
             [ngClass]="{'completed': task.completed, 'novalue': task.date==null}"
             mat-cell>
-          {{ task.date ? (task.date | date: "medium") : 'Без даты' }}
+          {{ task.date | taskDate }}
         </td>
       </ng-container>
 
