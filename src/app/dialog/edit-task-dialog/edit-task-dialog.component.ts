@@ -46,7 +46,7 @@ export class EditTaskDialogComponent implements OnInit {
     this.tmpDate = this.task.date!;
 
     this.dataHandler.getAllCategories().subscribe(items => this.categories = items);
-    this.dataHandler.getAllPriorities().subscribe(items => this.priorities = items)
+    this.dataHandler.getAllPriorities().subscribe(items => this.priorities = items);
   }
 
   onConfirm() {
@@ -85,11 +85,11 @@ export class EditTaskDialogComponent implements OnInit {
 
   // нажали выполнить (завершить) задачу
   complete() {
-    this.dialogRef.close('complete')
+    this.dialogRef.close('complete');
   }
 
   // делаем статус задачи "незавершенным" (активируем)
   activate() {
-    this.dialogRef.close('activate')
+    this.dialogRef.close('activate');
   }
 }
