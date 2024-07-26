@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   tasks!: Task[];
   categories!: Category[];
 
-  private selectedCategory!: Category | null;
+  protected selectedCategory!: Category | null;
 
   constructor(
     private dataHandler: DataHandlerService, //фасад для работы с данными

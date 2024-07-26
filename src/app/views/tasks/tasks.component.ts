@@ -7,6 +7,7 @@ import {MatSort} from "@angular/material/sort";
 import {MatDialog} from "@angular/material/dialog";
 import {EditTaskDialogComponent} from "../../dialog/edit-task-dialog/edit-task-dialog.component";
 import {ConfirmDialogComponent} from "../../dialog/confirm-dialog/confirm-dialog.component";
+import {Category} from "../../model/Category";
 
 @Component({
   selector: 'app-tasks',
@@ -34,6 +35,9 @@ export class TasksComponent implements OnInit {
 
   @Output()
   public updateTask = new EventEmitter<Task>();
+
+  @Output()
+  public selectCategory = new EventEmitter<Category>(); // нажали на категории из списка задач
 
   constructor(
     private dataHandler: DataHandlerService,  //доступ к данным
@@ -155,5 +159,9 @@ export class TasksComponent implements OnInit {
   onToggleStatus(task: Task) {
     task.completed = !task.completed;
     this.updateTask.emit(task);
+  }
+
+  onSelectCategory(category: Category) {
+    this.selectCategory.emit(category);
   }
 }
