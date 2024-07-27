@@ -66,4 +66,18 @@ export class AppComponent implements OnInit {
       });
     });
   }
+
+  onDeleteCategory(category: Category) {
+    this.dataHandler.deleteCategory(category.id).subscribe(cat => {
+      this.selectedCategory = null; // открываем категории 'Все'
+      this.onSelectCategory(this.selectedCategory);
+    });
+  }
+
+  onUpdateCategory(category: Category) {
+    this.dataHandler.updateCategory(category).subscribe(() => {
+      this.onSelectCategory(this.selectedCategory);
+    });
+  }
+
 }

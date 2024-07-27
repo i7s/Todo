@@ -21,6 +21,7 @@ import {ConfirmDialogComponent} from "./dialog/confirm-dialog/confirm-dialog.com
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {TaskDatePipe} from "./pipe/task-date.pipe";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {EditCategoryDialogComponent} from "./dialog/edit-category-dialog/edit-category-dialog.component";
 
 import {registerLocaleData} from "@angular/common";
 import localeRU from '@angular/common/locales/ru';
@@ -35,7 +36,8 @@ registerLocaleData(localeRU);
     TasksComponent,
     EditTaskDialogComponent,
     ConfirmDialogComponent,
-    TaskDatePipe
+    TaskDatePipe,
+    EditCategoryDialogComponent
   ],
   imports: [
     BrowserModule,

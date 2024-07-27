@@ -1,5 +1,5 @@
 import {Observable, of} from "rxjs";
-import { Category } from "../../../model/Category";
+import {Category} from "../../../model/Category";
 import {CategoryDAO} from "../interface/CategoryDAO";
 import {TestData} from "../../TestData";
 
@@ -22,11 +22,24 @@ export class CategoryDAOArray implements CategoryDAO {
   }
 
   delete(id: number): Observable<Category> {
-    throw new Error("Method not implemented.");
+    // Перед удалением - нужно в задачах занулить все ссылки на удаленное значение
+    // в реальной БД сама обновляет все ссылки (cascade update) - здесь приходится делать вручную (т.к. вместо БД массив)
+    TestData.tasks.forEach(task => {
+      if (task.category && task.category.id === id) {
+        task.category = null;
+      }
+    });
+
+    const tmpCategory = TestData.categories.find(t => t.id === id); // удаляем по id
+    TestData.categories.splice(TestData.categories.indexOf(tmpCategory!), 1);
+    return of(tmpCategory!);
   }
 
-  update(arg: Category): Observable<Category> {
-    throw new Error("Method not implemented.");
+  update(category: Category): Observable<Category> {
+    const tmpCategory = TestData.categories.find(t => t.id === category.id);
+    TestData.categories.splice(TestData.categories.indexOf(tmpCategory!), 1, category);
+
+    return of(tmpCategory!);
   }
 
 }
