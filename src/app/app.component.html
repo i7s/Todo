@@ -154,8 +154,18 @@
 
             <app-tasks (updateTask)="onUpdateTask($event)"
                        (deleteTask)="onDeleteTask($event)"
+
                        (selectCategory)="onSelectCategory($event)"
-              [tasks]="tasks"></app-tasks>
+                       (addTask)="onAddTask($event)"
+                       [selectedCategory]="selectedCategory!"
+
+                       (filterByTitle)="onSearchTasks($event)"
+                       (filterByStatus)="onFilterTasksByStatus($event)"
+                       (filterByPriority)="onFilterTasksByPriority($event)"
+
+                       [tasks]="tasks"
+                       [priorities]="priorities"
+            ></app-tasks>
 
           </div>
         </div>

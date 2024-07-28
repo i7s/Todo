@@ -24,7 +24,7 @@ export class CategoriesComponent implements OnInit {
   updateCategory = new EventEmitter<Category>();
 
   @Input()
-  selectedCategory: Category | undefined;
+  selectedCategory: Category | null = null;
 
   protected indexMouseMove: number | null = null;
 

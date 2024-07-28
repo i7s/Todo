@@ -8,6 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {EditTaskDialogComponent} from "../../dialog/edit-task-dialog/edit-task-dialog.component";
 import {ConfirmDialogComponent} from "../../dialog/confirm-dialog/confirm-dialog.component";
 import {Category} from "../../model/Category";
+import {Priority} from "../../model/Priority";
 
 @Component({
   selector: 'app-tasks',
@@ -22,12 +23,22 @@ export class TasksComponent implements OnInit {
   @ViewChild(MatPaginator, {static: false}) private paginator!: MatPaginator;
   @ViewChild(MatSort, {static: false}) private sort!: MatSort;
 
-  public tasks!: Task[];
+  public tasks: Task[] = [];
+  public priorities: Priority[] = [];
+
+  // текущая выбранная категория (используется для авт. выбора этой категории при создании новой задачи)
+  @Input()
+  selectedCategory: Category | undefined;
 
   @Input('tasks')
-  public set setTasks(tasks: Task[]) {
+  set setTasks(tasks: Task[]) {
     this.tasks = tasks;
     this.fillTable();
+  }
+
+  @Input('priorities')
+  set setPriorities(priorities: Priority[]) {
+    this.priorities = priorities;
   }
 
   @Output()
@@ -39,6 +50,23 @@ export class TasksComponent implements OnInit {
   @Output()
   public selectCategory = new EventEmitter<Category>(); // нажали на категории из списка задач
 
+  @Output()
+  filterByTitle = new EventEmitter<string>(); // поиск задач по названию
+
+  @Output()
+  filterByStatus = new EventEmitter<boolean>(); // фильтрация задач по статусу
+
+  @Output()
+  filterByPriority = new EventEmitter<Priority>(); // фильтрация задач по приоритету
+
+  @Output()
+  private addTask = new EventEmitter<Task>();
+
+  // search
+  protected searchTaskText: string = ""; // текущее значение для поиска задач
+  protected selectedStatusFilter: boolean | null = null; // по-умолчанию будут показываться задачи по всем статусам (решенные и нерешенные)
+  protected selectedPriorityFilter: Priority | null = null;
+
   constructor(
     private dataHandler: DataHandlerService,  //доступ к данным
     private dialog: MatDialog  //работа с диалоговым окном
@@ -46,8 +74,6 @@ export class TasksComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);
-
     this.dataSource = new MatTableDataSource();
     this.fillTable();
   }
@@ -163,5 +189,36 @@ export class TasksComponent implements OnInit {
 
   onSelectCategory(category: Category) {
     this.selectCategory.emit(category);
+  }
+
+  onFilterByTitle() {
+    this.filterByTitle.emit(this.searchTaskText);
+  }
+
+  onFilterByStatus(value: boolean | null) {
+    // на всякий случай проверяем изменилось ли значение (хотя сам UI компонент должен это делать)
+    if (value !== this.selectedStatusFilter) {
+      this.selectedStatusFilter = value;
+      this.filterByStatus.emit(this.selectedStatusFilter!);
+    }
+
+  }
+
+  onFilterByPriority(value: Priority | null) {
+    if (value !== this.selectedPriorityFilter) {
+      this.selectedPriorityFilter = value;
+      this.filterByPriority.emit(this.selectedPriorityFilter!);
+    }
+  }
+
+  openAddTaskDialog() {
+    const task = new Task(0, '', false, undefined, this.selectedCategory);
+
+    const dialogRef = this.dialog.open(EditTaskDialogComponent, {data: [task, 'Добавление задачи']});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) { // если кликнули ok и есть результат
+        this.addTask.emit(task);
+      }
+    });
   }
 }
