@@ -1,0 +1,12 @@
+<!-- About window -->
+<h1 mat-dialog-title class="title-center">
+  {{ dialogTitle }}
+</h1>
+<div mat-dialog-content class="title-center">
+  <p>{{ message }}</p>
+</div>
+<mat-dialog-actions align="center">
+  <button mat-raised-button color="primary" (click)="onConfirm()">
+    Ok
+  </button>
+</mat-dialog-actions>

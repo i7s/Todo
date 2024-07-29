@@ -22,9 +22,13 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {TaskDatePipe} from "./pipe/task-date.pipe";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {EditCategoryDialogComponent} from "./dialog/edit-category-dialog/edit-category-dialog.component";
+import {FooterComponent} from "./views/footer/footer.component";
 
 import {registerLocaleData} from "@angular/common";
 import localeRU from '@angular/common/locales/ru';
+import {AboutDialogComponent} from "./dialog/about-dialog/about-dialog.component";
+import {HeaderComponent} from "./views/header/header.component";
+import {StatComponent} from "./views/stat/stat.component";
 
 registerLocaleData(localeRU);
 
@@ -37,26 +41,30 @@ registerLocaleData(localeRU);
     EditTaskDialogComponent,
     ConfirmDialogComponent,
     TaskDatePipe,
-    EditCategoryDialogComponent
+    EditCategoryDialogComponent,
+    FooterComponent,
+    AboutDialogComponent,
+    HeaderComponent,
+    StatComponent
   ],
-  imports: [
-    BrowserModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    BrowserAnimationsModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCheckboxModule
-  ],
+    imports: [
+        BrowserModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCheckboxModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
