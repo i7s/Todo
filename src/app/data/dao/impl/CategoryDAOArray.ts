@@ -10,11 +10,21 @@ export class CategoryDAOArray implements CategoryDAO {
   }
 
   search(title: string): Observable<Category[]> {
-    throw new Error("Method not implemented.");
+    let result = TestData.categories.filter(
+      cat => cat.title.toUpperCase().includes(title.toUpperCase()));
+    return of(result.sort((c1, c2) => c1.title.localeCompare(c2.title)));
   }
 
-  add(arg: Category): Observable<Category> {
-    throw new Error("Method not implemented.");
+  add(category: Category): Observable<Category> {
+    if (category.id === undefined || category.id === 0) {
+      category.id = this.getLastIdCategory();
+    }
+    TestData.categories.push(category);
+    return of(category);
+  }
+
+  private getLastIdCategory() {
+    return Math.max.apply(Math, TestData.categories.map(c => c.id)) + 1;
   }
 
   get(id: number): Observable<Category> {

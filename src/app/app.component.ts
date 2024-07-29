@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   // фильтрация
   protected statusFilter: boolean | null = null; // all statuses by default
   protected priorityFilter: Priority | null = null; // all statuses by default
+  protected searchCategoryText: string = '';
 
   constructor(
     private dataHandler: DataHandlerService, //фасад для работы с данными
@@ -55,6 +56,7 @@ export class AppComponent implements OnInit {
     this.dataHandler.deleteCategory(category.id).subscribe(cat => {
       this.selectedCategory = null; // открываем категории 'Все'
       this.onSelectCategory(this.selectedCategory);
+      this.onSearchCategory(this.searchCategoryText);
     });
   }
 
@@ -98,4 +100,23 @@ export class AppComponent implements OnInit {
       this.updateTasks();
     });
   }
+
+  // добавление категории
+  onAddCategory(title: string) {
+    this.dataHandler.addCategory(title).subscribe(() => {
+      this.updateCategories();
+    });
+  }
+
+  private updateCategories() {
+    this.dataHandler.getAllCategories().subscribe(categories => this.categories = categories);
+  }
+
+  onSearchCategory(title: string) {
+    this.searchCategoryText = title;
+    this.dataHandler.searchCategories(title).subscribe(categories => {
+      this.categories = categories;
+    });
+  }
+
 }

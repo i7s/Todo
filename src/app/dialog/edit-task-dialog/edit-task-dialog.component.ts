@@ -5,6 +5,7 @@ import {DataHandlerService} from "../../service/data-handler.service";
 import {Category} from "../../model/Category";
 import {Priority} from "../../model/Priority";
 import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
+import {OperationType} from "../OperationType";
 
 @Component({
   selector: 'app-edit-task-dialog',
@@ -15,7 +16,7 @@ export class EditTaskDialogComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<EditTaskDialogComponent>, // для возможности работы с текущим диалог. окном
-    @Inject(MAT_DIALOG_DATA) private data: [Task, string], // данные которые передали в диалоговое окно
+    @Inject(MAT_DIALOG_DATA) private data: [Task, string, OperationType], // данные которые передали в диалоговое окно
     private dataHandler: DataHandlerService, // ссылка на сервис для работы с данными
     private dialog: MatDialog // для открытия нового диалогового окна (из текущего) - например для подтверждения удаления
   ) {
@@ -26,6 +27,7 @@ export class EditTaskDialogComponent implements OnInit {
 
   protected dialogTitle!: string; //заголовок окна
   protected task!: Task; //задача для редактирования/создания
+  private operationType: OperationType = 0; // тип операции
 
   // сохраняем все значения в отдельные переменные
   // чтобы изменения не сказывались на самой задаче и можно было отменить изменения
@@ -37,6 +39,7 @@ export class EditTaskDialogComponent implements OnInit {
   ngOnInit(): void {
     this.task = this.data[0];
     this.dialogTitle = this.data[1];
+    this.operationType = this.data[2];
 
     // инициализация начальных значений (записываем в отдельные переменные
     // чтобы можно было отменить изменения, а то будут сразу записываться в задачу)
@@ -92,4 +95,13 @@ export class EditTaskDialogComponent implements OnInit {
   activate() {
     this.dialogRef.close('activate');
   }
+
+  canDelete() {
+    return this.operationType === OperationType.EDIT;
+  }
+
+  canActivateDisactivate(): boolean {
+    return this.canDelete();
+  }
+
 }
