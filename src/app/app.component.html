@@ -15,13 +15,24 @@
   <div class="main-panel">
     <!-- Navbar -->
 
-    <app-header></app-header>
+    <app-header [categoryName]="selectedCategory ? selectedCategory.title :'Все'"
+                (toggleStat)="toggleStat($event)"
+                [showStat]="showStat"
+    >
+    </app-header>
 
     <!-- End Navbar -->
     <div class="content">
       <div class="container-fluid">
 
-        <app-stat></app-stat>
+
+        <app-stat
+          [totalTasksInCategory]="totalTasksCountInCategory"
+          [completeTasksInCategory]="completedCountInCategory"
+          [unCompleteTasksInCategory]="unCompletedCountInCategory"
+          [showStat]="showStat"
+        ></app-stat>
+
 
         <div class="row">
           <div class="col-12">

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+  @Input()
+  categoryName: string = '';
+
+  @Input()
+  showStat: boolean = true;
+
+  @Output()
+  toggleStat = new EventEmitter<boolean>();
+
+  onToggleStat() {
+    this.toggleStat.emit(!this.showStat); // вкл/выкл статистику
+  }
 }

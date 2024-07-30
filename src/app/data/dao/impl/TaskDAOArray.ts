@@ -57,20 +57,20 @@ export class TaskDAOArray implements TaskDAO {
     return allTasks;
   }
 
-  getCompletedCountInCategory(category: Category): Observable<number> {
-    throw new Error("Method not implemented.");
+  getCompletedCountInCategory(category: Category | null): Observable<number> {
+    return of(this.searchTasks(category, null, true, null).length);
   }
 
-  getUncompletedCountInCategory(category: Category): Observable<number> {
-    throw new Error("Method not implemented.");
+  getUncompletedCountInCategory(category: Category | null): Observable<number> {
+    return of(this.searchTasks(category, null, false, null).length);
   }
 
-  getTotalCountInCategory(category: Category): Observable<number> {
-    throw new Error("Method not implemented.");
+  getTotalCountInCategory(category: Category | null): Observable<number> {
+    return of(this.searchTasks(category, null, null, null).length);
   }
 
   getTotalCount(): Observable<number> {
-    throw new Error("Method not implemented.");
+    return of(TestData.tasks.length);
   }
 
   update(task: Task): Observable<Task> {

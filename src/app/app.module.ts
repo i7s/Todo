@@ -29,6 +29,7 @@ import localeRU from '@angular/common/locales/ru';
 import {AboutDialogComponent} from "./dialog/about-dialog/about-dialog.component";
 import {HeaderComponent} from "./views/header/header.component";
 import {StatComponent} from "./views/stat/stat.component";
+import {StatCardComponent} from "./views/stat/stat-card/stat-card.component";
 
 registerLocaleData(localeRU);
 
@@ -45,26 +46,27 @@ registerLocaleData(localeRU);
     FooterComponent,
     AboutDialogComponent,
     HeaderComponent,
-    StatComponent
+    StatComponent,
+    StatCardComponent
   ],
-    imports: [
-        BrowserModule,
-        MatTableModule,
-        MatSortModule,
-        MatPaginatorModule,
-        BrowserAnimationsModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        FormsModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatOptionModule,
-        MatSelectModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatCheckboxModule
-    ],
+  imports: [
+    BrowserModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
